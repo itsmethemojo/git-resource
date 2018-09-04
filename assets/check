@@ -72,11 +72,7 @@ fi
 
 if [ -n "$tag_filter" ]; then
   {
-    if [ -n "$ref" ]; then
-      git tag --list "$tag_filter" --sort=creatordate --contains $ref
-    else
-      git tag --list "$tag_filter" --sort=creatordate | tail -1
-    fi
+    git show-ref --hash --tags "$tag_filter"
   } | jq -R '.' | jq -s "map({ref: .})" >&3
 else
   {
